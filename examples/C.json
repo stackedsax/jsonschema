@@ -1,0 +1,8 @@
+{
+	"properties": {
+		"C": {
+			"description": "C's description.",
+			"type":"any"
+		}
+	}
+}

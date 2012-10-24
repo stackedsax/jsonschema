@@ -1,0 +1,13 @@
+{
+	"properties": {
+		"geo": {
+			"properties": {
+				"longitude": {
+					"type": "string"
+				},
+				"new": {}
+			},
+			"$ref": "http://json-schema.org/geo"
+		}
+	}
+}

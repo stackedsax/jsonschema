@@ -1,0 +1,10 @@
+{
+	"$ref": "http://json-schema.org/geo",
+	"type":"array",
+	"items": {
+		"type": "object",
+		"properties": {
+			"name": {}
+		}
+	}
+}

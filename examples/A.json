@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "A": {
+      "description": "A's description.",
+      "$ref": "http://jsonschema.net/examples/B.json"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+Schemas define JSON in applications
+Schemas describe JSON in documentation
+
+Choice: Write schemas amnually, get bored, give up. Or. Write program to do it, become famous, get loads of girls, become rish, world peace.
+
+Opening: Knowledge acquisition should be enough, but it's not so help yourself to beer and snacks which are in addition to standard Thursday quota.
+
+Top down approach: 
+	JSON 
+	Schemas 
+	Used in Tigerspike 
+	Solution Architect problems with clients 
+		Sample JSON
+		"...but this attribute isn't required"
+		"...and this attribute is used for XYZ"
+		"...um and this can't be greater than XYZ"
+	Need tool to sovle problem
+	Wikipedia no existing tool
+	Development
+		Photo of setup
+		Screenshot of Browser, Debug, Sublime
+	List of project phases
+	Tick box of what has been achieved and where along the list are currently
+
+	Fun JSON example {
+	dressesWell:false
+	}

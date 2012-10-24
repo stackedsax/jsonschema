@@ -1,0 +1,13 @@
+ {
+   "type": "object",
+   "properties": {
+     "age": {
+       "required": true,
+       "extends": {
+         "type": "number",
+         "required": false
+       }
+     }
+   }
+ }
+      
