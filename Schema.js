@@ -1,3 +1,12 @@
+var Backbone = require("backbone");
+var _ = require("underscore");
+var Models = require("./Models");
+var utility = require("./Utility");
+var util = require("util");
+
+var Type = Models.Type;
+var TypeList = Models.TypeList;
+
 // Namespace.
 var JsonSchema = new function() {
 
@@ -73,9 +82,9 @@ var JsonSchema = new function() {
     }
 
     function extensionAttr(aSchema, aAttributeValue) {
-        var attributeValueType = RealTypeOf(aAttributeValue);
+        var attributeValueType = utility.RealTypeOf(aAttributeValue);
 
-        if (attributeValueType == TypeEnum.OBJECT) {
+        if (attributeValueType == utility.TypeEnum.OBJECT) {
             var parentSchema = Schema4Schema(aAttributeValue);
 
             if (JsonSchema.MERGE_EXTS) {
@@ -87,7 +96,7 @@ var JsonSchema = new function() {
                 });
                 aSchema.addExtension(sp);
             }
-        } else if (attributeValueType == TypeEnum.ARRAY) {
+        } else if (attributeValueType == utility.TypeEnum.ARRAY) {
             var nestedKeys = Object.keys(aAttributeValue);
 
             for (l in nestedKeys) {
@@ -111,23 +120,23 @@ var JsonSchema = new function() {
 
     function itemsAttr(aSchema, aAttributeValue) {
 
-        var attributeValueType = RealTypeOf(aAttributeValue);
+        var attributeValueType = utility.RealTypeOf(aAttributeValue);
 
-        if (attributeValueType == TypeEnum.OBJECT) {
+        if (attributeValueType == utility.TypeEnum.OBJECT) {
 
             var nestedSchemaPair = new SchemaPair({
                 schema: Schema4Schema(aAttributeValue)
             });
             aSchema.addItem(nestedSchemaPair);
 
-        } else if (attributeValueType == TypeEnum.ARRAY) {
+        } else if (attributeValueType == utility.TypeEnum.ARRAY) {
 
             var nestedKeys = Object.keys(aAttributeValue);
 
             for (m in nestedKeys) {
                 var nestedAttrKey = nestedKeys[m];
                 var nestedAttrValue = aAttributeValue[nestedAttrKey];
-                var nestedAttrValueType = RealTypeOf(nestedAttrValue);
+                var nestedAttrValueType = utility.RealTypeOf(nestedAttrValue);
 
                 var nestedSchema = Schema4Schema(nestedAttrValue);
                 var nestedSchemaPair = new SchemaPair({
@@ -139,9 +148,9 @@ var JsonSchema = new function() {
     }
 
     function typesAttr(aSchema, aAttributeValue) {
-        var attributeValueType = RealTypeOf(aAttributeValue);
+        var attributeValueType = utility.RealTypeOf(aAttributeValue);
 
-        if (attributeValueType == TypeEnum.ARRAY) {
+        if (attributeValueType == utility.TypeEnum.ARRAY) {
 
             var nestedKeys = Object.keys(aAttributeValue);
 
@@ -153,7 +162,7 @@ var JsonSchema = new function() {
                 });
                 aSchema.addType(type);
             }
-        } else if (attributeValueType == TypeEnum.STRING) {
+        } else if (attributeValueType == utility.TypeEnum.STRING) {
             var type = new Type({
                 t: aAttributeValue
             });
@@ -169,7 +178,7 @@ var JsonSchema = new function() {
 
             var nestedPropertyKey = nestedKeys[l];
             var nestedPropertyValue = aAttributeValue[nestedPropertyKey];
-            var nestedPropertyValueType = RealTypeOf(nestedPropertyValue);
+            var nestedPropertyValueType = utility.RealTypeOf(nestedPropertyValue);
 
             var nestedSchema = Schema4Schema(nestedPropertyValue);
             var nestedSchemaPair = new SchemaPair({
@@ -233,7 +242,7 @@ var JsonSchema = new function() {
     function Schema4Object(aJsonObject) {
 
         var objectType = new Type({
-            t: TypeEnum.OBJECT
+            t: utility.TypeEnum.OBJECT
         });
         var schema = new Schema();
         schema.addType(objectType);
@@ -243,15 +252,15 @@ var JsonSchema = new function() {
         for (k in keys) {
             var propertyKey = keys[k];
             var propertyValue = aJsonObject[propertyKey];
-            var propertyValueType = RealTypeOf(propertyValue);
+            var propertyValueType = utility.RealTypeOf(propertyValue);
 
             var propertySchema = null;
             var propertySchemaPair = null;
 
-            if (propertyValueType == TypeEnum.OBJECT) {
+            if (propertyValueType == utility.TypeEnum.OBJECT) {
                 propertySchema = Schema4Object(propertyValue);
 
-            } else if (propertyValueType == TypeEnum.ARRAY) {
+            } else if (propertyValueType == utility.TypeEnum.ARRAY) {
                 propertySchema = Schema4Array(propertyValue);
 
             } else {
@@ -268,7 +277,7 @@ var JsonSchema = new function() {
     }
 
     function Schema4Value(aJsonValue) {
-        var valueType = RealTypeOf(aJsonValue);
+        var valueType = utility.RealTypeOf(aJsonValue);
         var type = new Type({
             t: valueType
         });
@@ -287,7 +296,7 @@ var JsonSchema = new function() {
 
         var schema = new Schema();
         var type = new Type({
-            t: TypeEnum.ARRAY
+            t: utility.TypeEnum.ARRAY
         });
         schema.addType(type);
 
@@ -300,11 +309,11 @@ var JsonSchema = new function() {
         for (k in keys) {
             var propertyKey = keys[k];
             var propertyValue = aJsonArray[propertyKey];
-            var propertyValueType = RealTypeOf(propertyValue);
+            var propertyValueType = utility.RealTypeOf(propertyValue);
 
             var itemSchema;
 
-            if (propertyValueType == TypeEnum.OBJECT) {
+            if (propertyValueType == utility.TypeEnum.OBJECT) {
                 itemSchema = Schema4Object(propertyValue);
             } else {
                 itemSchema = Schema4Value(propertyValue);
@@ -340,14 +349,10 @@ var JsonSchema = new function() {
     this.GenerateSchema = function() {
 
         var schemaVersion = 'http://json-schema.org/draft-03/schema';
-        var jsonObject = null;
+        console.log(process.argv[1])
+        var jsonObject = JSON.parse(process.argv[2]);
         var schema = null;
 
-        try {
-            jsonObject = JSON.parse(JsonSchema.INPUT_VALUE);
-        } catch (err) {
-            throw (err);
-        }
 
         if (JsonSchema.INPUT_MODE == 'schema') {
             schema = Schema4Schema(jsonObject);
@@ -360,3 +365,8 @@ var JsonSchema = new function() {
         return schema;
     }
 };
+
+exports.JsonSchema=JsonSchema;
+var uncouthSchema = JSON.stringify(JsonSchema.GenerateSchema(), undefined, 2);
+// What this is doing: RAD STUFF!!!
+console.log(uncouthSchema.replace(/\n[ \t\s]*"[^"]*": "",/g, ''));

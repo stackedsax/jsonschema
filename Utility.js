@@ -53,7 +53,7 @@ var SchemaAttributes = {
 
 var Templates = {};
 
-TypeEnum = {
+exports.TypeEnum = {
     STRING: "string",
     NUMBER: "number",
     INTEGER: "integer",
@@ -65,16 +65,16 @@ TypeEnum = {
     UNDEFINED: "undefined"
 };
 
-ListTypeEnum = {
+exports.ListTypeEnum = {
     PROPERTIES: "properties",
     ITEMS: "items"
 };
 
-function ProxyResult() {
+exports.ProxyResults = function () {
     value: undefined;
 }
 
-function ProxyRequest(url, result) {
+exports.ProxyRequest = function (url, result) {
     $.ajax({
         url: 'proxy.php',
         data: {
@@ -91,16 +91,19 @@ function ProxyRequest(url, result) {
     });
 }
 
-function RealTypeOf(v) {
-    if (typeof(v) == TypeEnum.OBJECT) {
+exports.RealTypeOf = function (v) {
+    if (typeof(v) == exports.TypeEnum.OBJECT) {
 
         if (v === null) {
-            return TypeEnum.NULL;
+            return exports.TypeEnum.NULL;
         }
         if (v.constructor == (new Array).constructor) {
-            return TypeEnum.ARRAY;
+            return exports.TypeEnum.ARRAY;
         }
-        return TypeEnum.OBJECT;
+        return exports.TypeEnum.OBJECT;
     }
     return typeof(v);
 }
+
+exports.SchemaAttributes = SchemaAttributes;
+exports.Templates = Templates;

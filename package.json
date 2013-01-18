@@ -1,0 +1,32 @@
+{
+  "name": "jsonschemacli",
+  "preferGlobal": "true",
+  "version": "0.3.0",
+  "author": "alex scammon <alexander.scammon@rackspace.com>",
+  "description": "a fork of jsonschema.net's json schema generator that runs on the command line",
+  "contributors": [ 
+    {
+      "name": "Jack Wooten",
+      "email": "#"
+    },
+    {
+      "name": "Matt Kaniaris",
+      "email": "#"
+    }  
+  ],
+  "keywords": [
+    "json",
+    "schema",
+    "jsonschema",
+    "jsonschema.net",
+    "generator"
+  ],
+  "dependencies" : {
+    "backbone"   :  "0.9.x",
+    "underscore" :  "1.4.x"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6"
+  }
+}
