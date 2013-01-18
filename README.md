@@ -13,4 +13,6 @@ node Schema.js '{"address":{"streetAddress":"21 2nd Street","city":"New York"},"
 Acknowledgements
 ================
 
-My thanks to Jack Wootton for his initial work on http://jsonschema.net.  This project is nothing more than a hacked up fork of his work.
+My thanks to Jack Wootton for his initial work on http://jsonschema.net (https://github.com/jsonschema/jsonschema).  This project is nothing more than a hacked up fork of his work.
+
+And thanks to Matt Kaniaris (https://github.com/kans) for walking me through the wonderful world of javascript.
